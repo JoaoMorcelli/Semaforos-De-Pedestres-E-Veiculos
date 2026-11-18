@@ -2,5 +2,28 @@
     zephyr,user {
         sinal-gpios = <&gpiod 2 GPIO_ACTIVE_HIGH>;
     };
+
+    leds_ext {
+        compatible = "gpio-leds";
+
+        veic_vermelho: veic_vermelho {
+            gpios = <&gpioc 8 GPIO_ACTIVE_HIGH>;   /* PTC8 */
+        };
+        veic_amarelo: veic_amarelo {
+            gpios = <&gpioc 9 GPIO_ACTIVE_HIGH>;   /* PTC9 */
+        };
+        veic_verde: veic_verde {
+            gpios = <&gpiod 4 GPIO_ACTIVE_HIGH>;   /* PTD4 */
+        };
+        ped_vermelho: ped_vermelho {
+            gpios = <&gpioa 12 GPIO_ACTIVE_HIGH>;  /* PTA12 */
+        };
+        ped_verde: ped_verde {
+            gpios = <&gpioa 13 GPIO_ACTIVE_HIGH>;  /* PTA13 */
+        };
+    };
 };
 
+&gpioc {
+    status = "okay";
+};
