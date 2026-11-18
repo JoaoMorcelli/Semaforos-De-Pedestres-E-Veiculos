@@ -81,4 +81,5 @@ Pré-condição: Garantir que ambas as placas estejam com o programa atuando no 
 
 Pós-condição: Foi possível observar a placa mestre piscar continuamente (de segundo em segundo) na cor amarela e a placa escrava piscar continuamente na cor vermelha.
 
-file:///C:/Users/Aluno/Downloads/20261118_095207.mp4
+https://github.com/user-attachments/assets/c9868c91-e950-483e-9b55-07698cbf437a
+
