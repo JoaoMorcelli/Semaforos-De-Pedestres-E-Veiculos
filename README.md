@@ -55,6 +55,7 @@ A fim de evidenciar o sincronismo das placas e o funcionamento dos dois semáfor
 Pré-condição: A placa foi ligada e reiniciada pelo botão de “reset”, para garantir que
 não houvesse nenhum lixo de memória.
 
+Etapas:
 1. Ligar o GND das duas placas através de um jumper;
 2. Ligar os pinos PTD2 das duas placas;
 3. Deixe as duas Threads com a mesma prioridade;
@@ -74,6 +75,7 @@ Para a implementação do modo noturno, foi necessário criar um sistema de esco
 ### Teste 4
 Pré-condição: Garantir que ambas as placas estejam com o programa atuando no mesmo modo de operação, caso contrário, não haverá erro de compilação, mas a lógica estaria errada.
 
+Etapas:
 1. Ligar o GND das duas placas através de um jumper;
 2. Ligar os pinos PTD2 das duas placas;
 3. Escolher o modo de operação do programa da placa mestre e dar Upload;
@@ -83,3 +85,21 @@ Pós-condição: Foi possível observar a placa mestre piscar continuamente (de 
 
 https://github.com/user-attachments/assets/c9868c91-e950-483e-9b55-07698cbf437a
 
+## Modo Botão (com interrupção)
+
+Para a versão com botão e uso da interrupção, foi adicionado mais um modo ao sistema já existente no código. No denominado ModoBotao para a placa mestre, o semáforo de veículos começa como verde e o de pedestres como vermelho, permanecendo dessa maneira até que o botão é pressionado. 
+Quando o botão é pressionado, o farol de veículos fica amarelo por um segundo, depois disso ele se torna vermelho e o de pedestres verde para permitir a travessia. Após o intervalo determinado na interrupção, os dois leds voltam para o estado de início e ficam assim até que haja nova interrupção. A placa escravo não precisou de um novo modo, já que continua se usando a mesma convenção do modo normal.
+
+### Teste 5
+Pré-condição: Garantir que ambas as placas estejam com o programa atuando no mesmo modo de operação, assim como garantir que a placa foi ligada e reiniciada pelo botão de “reset”, para garantir que
+não houvesse nenhum lixo de memória.
+
+Etapas:
+1. Ligar o GND das duas placas através de um jumper;
+2. Ligar os pinos PTD2 das duas placas;
+3. Ligar o botão no pino PTA16 e no GND da placa mestre;
+4. Defina 'TEMPO_DE_TRAVESSIA' como 5000
+
+Pós condição: Foi verificado a adequação de sincronização das placas, da coloração dos leds e a interrupção gerada pelo botão se mostrou muito responsiva.
+
+<img width="700" height="400" alt="TesteSemaforoVeiculos" src="evidencias\TesteModoBotao.gif" />
