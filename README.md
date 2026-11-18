@@ -66,3 +66,19 @@ Pós-condição: Foi possível atestar o sincronismo das duas placas, assim como
 
 <img width="400" height="700" alt="TesteSincronizacaoPlacas" src="evidencias\TesteSincronizacaoPlacas.gif" />
 
+
+## Modo Noturno
+
+Para a implementação do modo noturno, foi necessário criar um sistema de escolha de modos (Normal ou Noturno), tanto no programa da placa mestre quanto no programa da placa escravo. Este sistema foi feito através de #if e #elif comparando a variável ModoAtual com os valores pré-definidos das variáveis ModoNormal e ModoNoturno.
+
+### Teste 4
+Pré-condição: Garantir que ambas as placas estejam com o programa atuando no mesmo modo de operação, caso contrário, não haverá erro de compilação, mas a lógica estaria errada.
+
+1. Ligar o GND das duas placas através de um jumper;
+2. Ligar os pinos PTD2 das duas placas;
+3. Escolher o modo de operação do programa da placa mestre e dar Upload;
+4. Escolhe o mesmo modo de operação para a placa escrava e dar upload;
+
+Pós-condição: Foi possível observar a placa mestre piscar continuamente (de segundo em segundo) na cor amarela e a placa escrava piscar continuamente na cor vermelha.
+
+file:///C:/Users/Aluno/Downloads/20261118_095207.mp4
