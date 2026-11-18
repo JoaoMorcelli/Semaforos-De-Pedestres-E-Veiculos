@@ -1,2 +1,68 @@
 # Semaforos-De-Pedestres-E-Veiculos
-Repositório referente às aulas 07 e 08 de microcontroladores 2. O programa deve controlar o cruzamento entre duas vias (ruas), incluindo semáforos de veículos e de pedestres.
+Repositório referente às aulas 07 e 08 de microcontroladores 2. O programa deve controlar o cruzamento entre duas vias (ruas), incluindo semáforos de veículos e de pedestres. Foi desenvolvido pelos alunos João Favato e João Carvalho.
+
+## Requisitos de sistema 
+
+Para a operação do sistema, são necessários um notebook, duas placas FRDM-KL25Z, e jumpers.
+
+## Arquitetura de sistema
+
+O projeto utiliza a arquitetura do platform.io com zephyr.
+
+## Implementação do Semáforo de Pedestres
+
+Foi implementado o semáforo de pedestres com mutex, fazendo com que as duas condições de ligamento do led nunca se sobreponham. Como foi solicitado, os leds são controlados por duas threads independentes, com o led verde ficando aceso por 4 segundos e o vermelho também. Abaixo está o teste realizado para comprovar o funcionamento desse semáforo:
+
+### Teste 1
+Pré-condição: A placa foi ligada e reiniciada pelo botão de “reset”, para garantir que
+não houvesse nenhum lixo de memória.
+
+Etapas:
+1. Deixe as duas Threads com a mesma prioridade;
+2. Defina 'SLEEP_TIME_VERDE' como 4000;
+3. Defina 'SLEEP_TIME_VERMELHO' como 4000.
+
+Pós-condição: Foi possível atestar a coloração certa dos leds bem como um intervalo de tempo adequado para os dois estados. Isso pode ser verificado no vídeo a seguir (o vídeo foi acelerado mas os intervalos de tempo estavam coerentes).
+
+<img width="700" height="400" alt="TesteSemaforoPedestres" src="evidencias\TesteSemaforoPedestres.gif" />
+
+## Implementação do Semáforo de Veículos
+
+Conforme solicitado pelo enunciado, foram implementadas três threads, garantindo que os leds não se sobreponham. O comportamento do código é o seguinte: Verde acende por 3 segundos, amarelo acende por 1 segundo, vermelho acende por 4 segundos. Para validar o funcionamento dessa implementação, foi realizado o teste a seguir
+
+### Teste 2
+Pré-condição: A placa foi ligada e reiniciada pelo botão de “reset”, para garantir que
+não houvesse nenhum lixo de memória.
+
+Etapas:
+1. Deixe as três Threads com a mesma prioridade;
+2. Defina 'SLEEP_TIME_VERDE' como 3000;
+3. Defina 'SLEEP_TIME_VERMELHO' como 4000;
+4. Defina 'SLEEP_TIME_AMARELO' 1000.
+
+Pós-condição: Verificou-se que os três leds apresentam a coloração correta, assim como o intervalo de tempo dos três estados está de acordo com o determinado. O vídeo a seguir evidencia esses aspectos.
+
+<img width="700" height="400" alt="TesteSemaforoVeiculos" src="evidencias\TesteSemaforoVeiculos.gif" />
+
+
+## Integração dos dois Semáforos
+
+Para sincronizar os dois semáforos utilizando os leds das duas placas, foram necessárias diversas alterações no código. A primeira delas foi a utilização de semáforos na estrutura código em detrimento do mutex, pois dessa maneira foi possível criar uma lógica de troca de estados mais robusta. Em relação ao sincronismo das duas placas, usamos uma lógica em que existe uma placa 'mestre', que roda o código principal e liga os leds do semáforo de veículos, e uma placa 'escrava' que possui apenas um código para receber os sinais da placa mestre e ligar os leds do semáforo de pedestres. 
+
+A fim de evidenciar o sincronismo das placas e o funcionamento dos dois semáforos simultaneamente, realizamos o teste a seguir.
+
+### Teste 3
+Pré-condição: A placa foi ligada e reiniciada pelo botão de “reset”, para garantir que
+não houvesse nenhum lixo de memória.
+
+1. Ligar o GND das duas placas através de um jumper;
+2. Ligar os pinos PTD2 das duas placas;
+3. Deixe as duas Threads com a mesma prioridade;
+4. Defina 'SLEEP_TIME_VERDE' como 3000;
+5. Defina 'SLEEP_TIME_VERMELHO' como 4000;
+6. Defina 'SLEEP_TIME_AMARELO' como 1000.
+
+Pós-condição: Foi possível atestar o sincronismo das duas placas, assim como os intervalos de tempo determinados. Isso pode ser observado no vídeo a seguir.
+
+<img width="400" height="700" alt="TesteSincronizacaoPlacas" src="evidencias\TesteSincronizacaoPlacas.gif" />
+

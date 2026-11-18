@@ -27,6 +27,7 @@ static const struct gpio_dt_spec ledVermelho = GPIO_DT_SPEC_GET(LED2_NODE, gpios
 static const struct gpio_dt_spec ledVerde = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
 static const struct gpio_dt_spec sinal       = GPIO_DT_SPEC_GET(DT_PATH(zephyr_user), sinal_gpios);
 
+///Conectar os pinos PTD2 das duas placas
 void threadPedestreVerde(void *arg1, void *arg2, void *arg3)
 {
     while (1) {
