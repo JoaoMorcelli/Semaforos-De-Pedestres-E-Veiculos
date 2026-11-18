@@ -283,3 +283,75 @@ int main(void)
 
     return 0;
 }
+
+/*
+//Programa do microcontrolador Escravo
+#include <zephyr/kernel.h>
+#include <zephyr/device.h>
+#include <zephyr/drivers/gpio.h>
+
+#define ModoNormal  1
+#define ModoNoturno 2
+
+#ifndef ModoAtual
+#define ModoAtual ModoNormal
+#endif
+
+// Barra a compilacao se o valor do modo for invalido 
+#if (ModoAtual != ModoNormal) && (ModoAtual != ModoNoturno)
+    #error "ModoAtual invalido! Use ModoNormal ou ModoNoturno."
+#endif
+
+static const struct gpio_dt_spec ledVerde    = GPIO_DT_SPEC_GET(DT_ALIAS(led0), gpios);
+static const struct gpio_dt_spec ledVermelho = GPIO_DT_SPEC_GET(DT_ALIAS(led2), gpios);
+static const struct gpio_dt_spec sinal       = GPIO_DT_SPEC_GET(DT_PATH(zephyr_user), sinal_gpios);
+
+#if ModoAtual == ModoNoturno
+#define Pisca 1000
+#endif
+
+int main(void)
+{
+    if (!gpio_is_ready_dt(&ledVerde) ||
+        !gpio_is_ready_dt(&ledVermelho) ||
+        !gpio_is_ready_dt(&sinal)) {
+        return 0;
+    }
+
+    gpio_pin_configure_dt(&ledVerde,    GPIO_OUTPUT_INACTIVE);
+    gpio_pin_configure_dt(&ledVermelho, GPIO_OUTPUT_INACTIVE);
+    gpio_pin_configure_dt(&sinal,       GPIO_INPUT);
+    
+#if ModoAtual == ModoNormal
+
+    while (1) {
+        if (gpio_pin_get_dt(&sinal) > 0) {
+            // Mestre vermelho: pedestre verde 
+            gpio_pin_set_dt(&ledVermelho, 0);
+            gpio_pin_set_dt(&ledVerde, 1);
+        } else {
+            // Mestre verde/amarelo: pedestre vermelho 
+            gpio_pin_set_dt(&ledVerde, 0);
+            gpio_pin_set_dt(&ledVermelho, 1);
+        }
+
+        int v = gpio_pin_get_dt(&sinal);
+        printk("sinal = %d\n", v);
+
+        k_msleep(10);
+    }
+
+#elif ModoAtual == ModoNoturno
+
+    while (1) {
+        gpio_pin_set_dt(&ledVermelho, 1);
+        k_msleep(Pisca);
+        gpio_pin_set_dt(&ledVermelho, 0);
+        k_msleep(Pisca);
+    }
+
+#endif
+
+    return 0;
+}
+*/
